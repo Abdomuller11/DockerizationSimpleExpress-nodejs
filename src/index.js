@@ -3,6 +3,7 @@ const express = require('express');
 const redis = require('redis');
 //const {Client} = require('pg');
 const conntypeorm = require('typeorm');
+const os = require('os');
 
 
 const prt= process.env.PORT || 8989;
@@ -56,23 +57,19 @@ const URI=`mongodb://${db_user}:${db_password}@mongo:${db_prt}`;
 app.get('/', (req,res) => {
     redisclient.set('product', 'headset_c9')
     redisclient.set('items','now no items')
-    res.send('<h1>hi abdol</h1>')});
-app.get('/etc', (req,res) => res.send('<h1>hi abdo in etsc</h1>'));
+    res.send(`<h1>hi abdo from ${os.hostname}</h1>`)
+    console.log(`${os.hostname}`)
 
-app.get('/ecom', async (req,res) => 
+  });
+app.get('/etc', (req,res) => res.send('<h1>hi abdo in etsc with watchTower</h1>'));
+
+app.get('/fk', async (req,res) => 
 {
     const selected_item = await redisclient.get('product');
     const selected_item2 =await redisclient.get('items');
-res.send(`<h1>hi abdo in kk </h1> <h2>${selected_item}, ${selected_item2}</h2>`)});
+res.send(`<h1>hi abdo in fk </h1> <h2>${selected_item}, ${selected_item2}</h2>`)});
 
-app.post('/users', async (req, res) => {
-    const entityManager = req.container.get(EntityManager);
-    const user = new User();
-    user.username = 'john';
-    user.password = 'password';
-    await entityManager.save(user);
-    res.send('User saved');
-  });
+
   
 
 app.listen(prt, () => console.log(`app is up and running on prt: ${prt}`) );

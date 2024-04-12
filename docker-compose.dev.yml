@@ -5,11 +5,9 @@ services:
       context: .\
       dockerfile: Dockerfile
       target: dev
-    container_name: ref0
     volumes:
       - E:\cloud1\src:/app/src
-    ports:
-      - "8888:9999"
+
     environment:
       - PORT=9999
       - env=dev
